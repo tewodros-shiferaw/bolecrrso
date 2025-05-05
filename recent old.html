@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BOLE CRRSO</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="banner">
+            <div style="display: flex; gap: 10px;">
+                <!-- Fixed IDs and added proper video3 -->
+                <video id="video1" muted playsinline width="300">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+                <video id="video2" muted playsinline width="300" style="display: none;">
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+                <video id="video3" muted playsinline width="300" style="display: none;">
+                    <source src="video3.mp4" type="video/mp4">
+                </video>
+            </div>
+            
+            <!--<button onclick="toggleMute()">Unmute Videos</button>-->
+
+            <script>
+                // Correct element references
+                const video1 = document.getElementById("video1");
+                const video2 = document.getElementById("video2");
+                const video3 = document.getElementById("video3");
+                
+                // Initialize video playback
+                function initPlayback() {
+                    video1.style.display = 'block';
+                    video2.style.display = 'none';
+                    video3.style.display = 'none';
+                    video1.currentTime = 0;
+                    video1.play().catch(error => {
+                        console.error('Video1 play failed:', error);
+                    });
+                }
+
+                // Start first video
+                initPlayback();
+
+                // Video1 end handler
+                video1.addEventListener('ended', () => {
+                    video1.style.display = 'none';
+                    video2.style.display = 'block';
+                    video3.style.display = 'none';
+                    video2.currentTime = 0;
+                    video2.play().catch(error => {
+                        console.error('Video2 play failed:', error);
+                    });
+                });
+
+                // Video2 end handler
+                video2.addEventListener('ended', () => {
+                    video2.style.display = 'none';
+                    video3.style.display = 'block';
+                    video3.currentTime = 0;
+                    video3.play().catch(error => {
+                        console.error('Video3 play failed:', error);
+                    });
+                });
+
+                // Video3 end handler (loop back to video1)
+                video3.addEventListener('ended', () => {
+                    video3.style.display = 'none';
+                    video1.style.display = 'block';
+                    video1.currentTime = 0;
+                    video1.play().catch(error => {
+                        console.error('Video1 replay failed:', error);
+                    });
+                });
+
+                // Toggle mute function
+                function toggleMute() {
+                    const isMuted = video1.muted;
+                    video1.muted = !isMuted;
+                    video2.muted = !isMuted;
+                    video3.muted = !isMuted;
+                    document.querySelector("button").textContent = isMuted ? "Mute Videos" : "Unmute Videos";
+                }
+
+                // Preload all videos
+                video2.preload = "auto";
+                video3.preload = "auto";
+            </script>
+
+            <!-- Rest of your content -->
+            <div class="navbar">
+                <img class="logo" src="crrso logo.jpg">
+                <ul>
+                    <h1>በክፍለ ከተማ የሚሰጡ አገልግሎቶች</h1>
+                    <h2>→ የወሳኝ ኩነት ምዝገባና ማስረጃ አገልግሎት</h2>
+                    <h2>→ የጋብቻ ምዝገባና እድሳት ከ2001-2008</h2>
+                    <h2>→ የጋብቻ ምዝገባና እርማት ምዝገባና ማስረጃ</h2>
+                    <h2>→ የጋብቻ ግልባጭ ወይም ምትክ ምዝገባና ማስረጃ</h2>
+                </ul>
+            </div>
+            <div class="content">
+                <h2>ስናገለግልዎ በደስታ ነው</h2>
+                <div>
+                    <button type="button">BOLE CRRSO</button>
+                    <button onclick="toggleMute()">Unmute Videos</button>
+                </div>
+            </div>
+            
+        </div>
+    </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BOLE CRRSO</title>
+        <link rel="stylesheet" href="style.css">
+        <style>
+            /* Added spacing styles */
+            .navbar ul {
+                line-height: 1.6;
+                margin: 20px 0;
+                padding-left: 20px;
+            }
+            
+            .navbar h1 {
+                margin-bottom: 15px;
+            }
+            
+            .navbar h2 {
+                margin: 10px 0;
+                padding-left: 20px;
+            }
+            
+            .content div {
+                margin-top: 20px;
+            }
+            
+            button {
+                margin: 10px;
+                padding: 8px 16px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+            <div style="display: flex; gap: 10px;">
+                <!-- Added 6 videos -->
+                <video id="video1" muted playsinline width="300">
+                    <source src="video1.mp4" type="video/mp4">
+                </video>
+                <video id="video2" muted playsinline width="300" style="display: none;">
+                    <source src="video2.mp4" type="video/mp4">
+                </video>
+                <video id="video3" muted playsinline width="300" style="display: none;">
+                    <source src="video3.mp4" type="video/mp4">
+                </video>
+                <video id="video4" muted playsinline width="300" style="display: none;">
+                    <source src="video4.mp4" type="video/mp4">
+                </video>
+                <video id="video5" muted playsinline width="300" style="display: none;">
+                    <source src="video5.mp4" type="video/mp4">
+                </video>
+                <video id="video6" muted playsinline width="300" style="display: none;">
+                    <source src="video6.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <script>
+                // Array-based solution for 6 videos
+                const videos = [
+                    document.getElementById('video1'),
+                    document.getElementById('video2'),
+                    document.getElementById('video3'),
+                    document.getElementById('video4'),
+                    document.getElementById('video5'),
+                    document.getElementById('video6')
+                ];
+
+                let currentVideoIndex = 0;
+
+                function initPlayback() {
+                    videos.forEach((video, index) => {
+                        video.style.display = index === 0 ? 'block' : 'none';
+                        video.currentTime = 0;
+                        if(index === 0) video.play().catch(console.error);
+                        video.preload = "auto";
+                    });
+                }
+
+                function playNextVideo() {
+                    videos[currentVideoIndex].style.display = 'none';
+                    currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+                    videos[currentVideoIndex].style.display = 'block';
+                    videos[currentVideoIndex].currentTime = 0;
+                    videos[currentVideoIndex].play().catch(console.error);
+                }
+
+                // Add event listeners to all videos
+                videos.forEach(video => {
+                    video.addEventListener('ended', playNextVideo);
+                });
+
+                // Toggle mute function for all videos
+                function toggleMute() {
+                    const isMuted = videos[0].muted;
+                    videos.forEach(video => video.muted = !isMuted);
+                    document.querySelector("button").textContent = isMuted ? "Mute Videos" : "Unmute Videos";
+                }
+
+                // Initialize playback
+                initPlayback();
+            </script>
+
+            <!-- Content with proper spacing -->
+            <div class="navbar">
+                <img class="logo" src="crrso logo.jpg">
+                <ul>
+                    <h1>በክፍለ ከተማ የሚሰጡ አገልግሎቶች</h1>
+                    <h2>→ የወሳኝ ኩነት ምዝገባና ማስረጃ አገልግሎት</h2>
+                    <h2>→ የጋብቻ ምዝገባና እድሳት ከ2001-2008</h2>
+                    <h2>→ የጋብቻ ምዝገባና እርማት ምዝገባና ማስረጃ</h2>
+                    <h2>→ የጋብቻ ግልባጭ ወይም ምትክ ምዝገባና ማስረጃ</h2>
+                </ul>
+                
+            </div>
+            
+            <div class="content">
+                <h2>ስናገለግልዎ በደስታ ነው</h2>
+                <div>
+                    <h2>BOLE CRRSO</h2><br>
+                   <!---- <button type="button">BOLE CRRSO</button>-->
+                    <button onclick="toggleMute()">Unmute Videos</button>
+                </div>
+            </div>
+            
+        </div>
+        
+    </body>
+</html>
